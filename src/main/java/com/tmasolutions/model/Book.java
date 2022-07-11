@@ -3,21 +3,26 @@ package com.tmasolutions.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="books")
+@Table(name="book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private  String name;
-    private  double price;
+    private String author;
+    private  String description;
+    private String language;
+    private String name;
 
-    public Book(Long id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+    public Book()
+    {
+
     }
-
-    public Book() {
+    public Book(Long id, String author, String description, String language, String name) {
+        this.id = id;
+        this.author = author;
+        this.description = description;
+        this.language = language;
+        this.name = name;
     }
 
     public Long getId() {
@@ -28,19 +33,35 @@ public class Book {
         this.id = id;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

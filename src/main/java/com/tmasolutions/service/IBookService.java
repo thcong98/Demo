@@ -1,2 +1,4 @@
-package com.tmasolutions.service;public class IBookService {
+package com.tmasolutions.service;
+
+public class IBookService {
 }
