@@ -18,7 +18,8 @@
     <repositories>
         <repository>
             <id>com.e-iceblue</id>
-            <url>https://repo.e-iceblue.cn/repository/maven-public/</url>
+            <name>e-iceblue</name>
+            <url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -78,11 +79,11 @@
 
         </dependency>
         <!-- https://mvnrepository.com/artifact/e-iceblue/spire.doc.free -->
-<!--        <dependency>
-            <groupId>e-iceblue</groupId>
-            <artifactId>spire.xsl.free</artifactId>
-            <version>3.9.0</version>
-        </dependency>-->
+            <dependency>
+                <groupId> e-iceblue </groupId>
+                <artifactId>spire.doc</artifactId>
+                <version>5.4.2</version>
+            </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>

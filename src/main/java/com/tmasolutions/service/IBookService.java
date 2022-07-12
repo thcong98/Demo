@@ -1,4 +1,9 @@
 package com.tmasolutions.service;
 
-public class IBookService {
+import com.tmasolutions.model.Book;
+
+import java.util.List;
+
+public interface IBookService {
+    List<Book> findByNameContaining(String search);
 }

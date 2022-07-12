@@ -40,17 +40,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tmasolutions.factory.doc.MailMergeBaocao;
 import com.tmasolutions.factory.excel.BookExcelService;
 import com.tmasolutions.utils.ExcelHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,9 +63,8 @@ import java.util.Date;
 @RestController
 @RequestMapping("/utils")
 public class UtilsController {
-/*
     @Autowired
-    MailMergeData mailMergeToTrinhThanhToan;
+    MailMergeBaocao mailMergeToTrinhThanhToan;
     @PostMapping("/mailMergeToTrinhThanhToan")
     public ResponseEntity<Resource> mailMergeToTrinhThanhToan() throws Exception {
         String pdfPath = "";
@@ -81,7 +85,9 @@ public class UtilsController {
             Files.delete(file.toPath());
         }
 
-    }*/
+    }
+
+
 
     @Autowired
     com.tmasolutions.factory.file.StorageService filesStorageService;
