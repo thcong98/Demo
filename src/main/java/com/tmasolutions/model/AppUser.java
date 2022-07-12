@@ -1,10 +1,11 @@
 package com.tmasolutions.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "\"user\"")
-public class AppUser {
+public class AppUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -4,6 +4,10 @@ import com.tmasolutions.model.AppUser;
 import com.tmasolutions.repo.AppUserRepository;
 import com.tmasolutions.service.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,42 @@ public class AppUserService implements IAppUserService {
     public List<AppUser> loadUserByUsername(String Username) {
         // TODO Auto-generated method stub
         return userRepository.findByEmail(Username);
+    }
+
+    @Override
+    public Page<AppUser> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<AppUser> findByEmailContaining(String email, Pageable pageable) {
+        return userRepository.findByEmailContaining(email, pageable);
+    }
+
+    @Override
+    @Cacheable(value = "AppUser", key = "#id")
+    public AppUser findById(Long id) {
+        AppUser usr = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User Not Found"));
+        return usr;
+    }
+
+    @Override
+   // @CachePut(value = "AppUser", key = "#id")
+    @CacheEvict(value = "AppUser", allEntries = true)
+    public AppUser updateUser(Long id, AppUser newAppUser) {
+        AppUser bk = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User Not Found"));
+        bk.setFirstname(newAppUser.getFirstname());
+        bk.setLastname(newAppUser.getLastname());
+        bk.setRole(newAppUser.getRole());
+        userRepository.save(bk);
+        return bk;
+    }
+
+    @Override
+//    @CacheEvict(value = "AppUser", key = "#id")
+    public void deleteAppUser(Long id) {
+        AppUser usr = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User NOT FOUND"));
+        userRepository.delete(usr);
     }
 
 }
