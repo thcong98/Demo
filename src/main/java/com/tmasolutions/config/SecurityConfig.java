@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,13 +54,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // dont authenticate this particular request
                 .authorizeRequests().antMatchers("/authenticate","/swagger-ui/","/swagger-ui/**","/v2/**","/v3/**","/swagger-resources/**", "/users/").permitAll()
                 .antMatchers("/users/require_role_USER").hasAnyAuthority("USER")
-                .antMatchers("/users/require_role_ADMIN").hasAnyAuthority("ADMIN")
+                .antMatchers("/users/require_role_ADMIN").hasAnyAuthority("ADMIN");
                 // all other requests need to be authenticated
-                .anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                // make sure we use stateless session; session won't be used to
-                // store user's state.
-               .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                .anyRequest().authenticated()
+//                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+//                // make sure we use stateless session; session won't be used to
+//                // store user's state.
+//               .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

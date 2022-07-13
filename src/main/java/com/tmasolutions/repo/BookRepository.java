@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAll();
+    List<Book> findByName(String name);
     List<Book> findByNameContaining(String search);
 }
