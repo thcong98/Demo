@@ -9,5 +9,7 @@ import java.util.List;
 
 public interface AppUserRepository extends JpaRepository<AppUser, Long>{
     List<AppUser> findByEmail(String Email);
-    Page<AppUser> findByEmailContaining(String email, Pageable pageable );
+    Page<AppUser> findAll(Pageable pageable);
+    Page<AppUser> findByEmailContaining(String Email, Pageable pageable);
+
 }

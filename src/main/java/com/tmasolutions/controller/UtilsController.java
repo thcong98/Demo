@@ -52,6 +52,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -65,6 +66,17 @@ import java.util.Date;
 public class UtilsController {
     @Autowired
     MailMergeBaocao mailMergeToTrinhThanhToan;
+    @Autowired
+    com.tmasolutions.factory.EmailForgotPassword emailForgotPassword;
+
+    @PostMapping("/sentemail")
+    public ResponseEntity<?> createUser() throws MessagingException, IOException {
+        emailForgotPassword.sendEmail("Nguyễn Thành Công", "www.google.com","thanhcongvq347@gmail.com");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.readTree("{\"Greeting\": \"Greetings from Spring Boot!\"}");
+        return ResponseEntity.ok(json);
+    }
+
     @PostMapping("/mailMergeToTrinhThanhToan")
     public ResponseEntity<Resource> mailMergeToTrinhThanhToan() throws Exception {
         String pdfPath = "";
