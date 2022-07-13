@@ -72,7 +72,6 @@ public class UtilsController {
             pdfPath = mailMergeToTrinhThanhToan.MailMergeData();
             File file = new File(pdfPath);
             ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(file.toPath()));
-
             HttpHeaders headers = new HttpHeaders();
             String headerKey = "Content-Disposition";
             String headerValue = "attachment; filename=to-trinh-thanh-toan.pdf";
