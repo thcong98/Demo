@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/hello")
 public class HelloController {
     @Autowired
-    BookRepository userRepository;
+    BookRepository bookRepository;
 
     @Autowired
     BookServiceImpl bookService;
@@ -35,15 +35,18 @@ public class HelloController {
     @PostMapping("/books")
     @ApiOperation(value = "Create new book", notes = "Create new book for system")
     public ResponseEntity<Book> createUser(@RequestBody Book book) throws JsonProcessingException {
-        Book dt = userRepository.save(book);
+        Book dt = bookRepository.save(book);
         System.out.println(dt.getId());
         return ResponseEntity.ok(dt);
     }
     @GetMapping("/books")
     public List<Book> all() {
-        return userRepository.findAll();
+        return bookRepository.findAll();
     }
-
+    @GetMapping("/books/findbyname/{name}")
+    public List<Book> findbyname(@PathVariable String name) {
+        return bookRepository.findByName(name);
+    }
     @GetMapping("/books/filer")
     public List<Book> all(String search) {
         return bookService.findByNameContaining(search);
@@ -51,19 +54,19 @@ public class HelloController {
 
     @GetMapping("/books/{id}")
     public Book one(@PathVariable Long id) {
-        return userRepository.findById(id).orElseThrow(() -> null);
+        return bookRepository.findById(id).orElseThrow(() -> null);
     }
 
     @Transactional
     @PutMapping("/books/{id}/required-no-store-data")
-    public Book updateOne(@PathVariable Long id, String NewName, String Description, String NewAuthor, String NewLanguage){
-        bookService.updateNameRequired(id, NewName);//is not stored to DB
-        bookService.updateAuthorNameRequired(id, NewAuthor);//is not stored to DB
-        bookService.updateDescriptionRequired(id, Description);//is not stored to DB
-        return bookService.updateLanguageRequired(id, NewLanguage);//is not stored to DB
+    public Book updateOne(@PathVariable Long id, String name, String description, String author, String language){
+        bookService.updateNameRequired(id, name);//is not stored to DB
+        bookService.updateAuthorNameRequired(id, description);//is not stored to DB
+        bookService.updateDescriptionRequired(id, author);//is not stored to DB
+        return bookService.updateLanguageRequired(id, language);//is not stored to DB
     }
 
-    @Transactional
+    @Transactional()
     @PutMapping("/books/{id}/required-new-storedata-except-language")
     public Book updateOneNew(@PathVariable Long id, String NewName, String Description, String NewAuthor, String NewLanguage){
         bookService.updateNameRequiresNew(id, NewName);//is stored to DB
@@ -80,10 +83,11 @@ public class HelloController {
         return bookService.updateLanguageRequiresNew(id, NewLanguage);//is not stored to DB
     }
     @PutMapping("/books/{id}/mandatory-passed-store-data")
+    @Transactional
     public Book updateOneMandatory(@PathVariable Long id, String NewName){
         return  bookService.updateNameMandatory(id, NewName); // Passed at normal
     }
-    @PutMapping("/books/{id}/mandatory-tailed-no-store-data")
+    @PutMapping("/books/{id}/mandatory-failed-no-store-data")
     public Book updateOneMandatoryFailed(@PathVariable Long id, String NewName){
         return bookService.updateNameMandatory(id, NewName);//Throw exception
     }
@@ -133,6 +137,6 @@ public class HelloController {
 
     @PutMapping("/books/findByName")
     public List<Book> rollbackname(String Name) throws SQLException {
-        return userRepository.findByName(Name);
+        return bookRepository.findByName(Name);
     }
 }

@@ -3,6 +3,7 @@ package com.tmasolutions.service.Impl;
 import com.tmasolutions.model.Book;
 import com.tmasolutions.repo.BookRepository;
 import com.tmasolutions.service.IBookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements IBookService {
+    @Autowired
     private BookRepository bookRepository;
 
     @Override
@@ -21,8 +23,8 @@ public class BookServiceImpl implements IBookService {
     }
 
     /*Transactional_REQUIRED*/
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public Book updateNameRequired(Long id, String name) {
         Book bk = bookRepository.findById(id).get();
         bk.setName(name);
@@ -30,36 +32,36 @@ public class BookServiceImpl implements IBookService {
         return bk;
     }
 
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public Book updateDescriptionRequired(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public Book updateLanguageRequired(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
+        int a= 1/0;
         return bk;
     }
 
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public Book updateAuthorNameRequired(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }
 
     /////////////////////////////////////////////////////////////////////////
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
+    @Transactional(propagation = Propagation.REQUIRES_NEW,readOnly = true)
     public Book updateNameReadOnly(Long id, String name) {
         Book bk = bookRepository.findById(id).get();
         bk.setName(name);
@@ -74,7 +76,8 @@ public class BookServiceImpl implements IBookService {
             Book bk = bookRepository.findById(id).get();
             bk.setLanguage(name);
             bookRepository.save(bk);
-            int i = 1/0;
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//manual rollback
+//            int i = 1/0;
             return bk;
         }catch (Exception ex)
         {
@@ -97,7 +100,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NEVER)
     public Book updateDescriptionNever(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
@@ -106,7 +109,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NEVER)
     public Book updateLanguageNever(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
         return bk;
     }
@@ -115,7 +118,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NEVER)
     public Book updateAuthorNameNever(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }
@@ -134,7 +137,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public Book updateDescriptionSupports(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
@@ -143,8 +146,9 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public Book updateLanguageSupports(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
+        int a=1/0;
         return bk;
     }
 
@@ -152,7 +156,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public Book updateAuthorNameSupports(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }
@@ -171,7 +175,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Book updateDescriptionNotSupports(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
@@ -180,7 +184,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Book updateLanguageNotSupports(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
         return bk;
     }
@@ -189,7 +193,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Book updateAuthorNameNotSupports(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }
@@ -208,7 +212,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Book updateDescriptionRequiresNew(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
@@ -217,8 +221,9 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Book updateLanguageRequiresNew(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
+        int a= 1/0;
         return bk;
     }
 
@@ -226,7 +231,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Book updateAuthorNameRequiresNew(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }
@@ -245,7 +250,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NESTED)
     public Book updateDescriptionNested(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
@@ -254,7 +259,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NESTED)
     public Book updateLanguageNested(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
         return bk;
     }
@@ -263,7 +268,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.NESTED)
     public Book updateAuthorNameNested(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }
@@ -283,7 +288,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.MANDATORY)
     public Book updateDescriptionMandatory(Long id, String description) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(description);
+        bk.setDescription(description);
         bookRepository.save(bk);
         return bk;
     }
@@ -292,7 +297,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.MANDATORY)
     public Book updateLanguageMandatory(Long id, String language) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(language);
+        bk.setLanguage(language);
         bookRepository.save(bk);
         return bk;
     }
@@ -301,7 +306,7 @@ public class BookServiceImpl implements IBookService {
     @Transactional(propagation = Propagation.MANDATORY)
     public Book updateAuthorNameMandatory(Long id, String authorName) {
         Book bk = bookRepository.findById(id).get();
-        bk.setName(authorName);
+        bk.setAuthor(authorName);
         bookRepository.save(bk);
         return bk;
     }

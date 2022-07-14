@@ -71,7 +71,7 @@ public class UtilsController {
 
     @PostMapping("/sentemail")
     public ResponseEntity<?> createUser() throws MessagingException, IOException {
-        emailForgotPassword.sendEmail("Nguyễn Thành Công", "www.google.com","thanhcongvq347@gmail.com");
+        emailForgotPassword.sendEmail("Nguyễn Thành Công", "www.google.com","sieunhandl05@gmail.com");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree("{\"Greeting\": \"Greetings from Spring Boot!\"}");
         return ResponseEntity.ok(json);

@@ -1,8 +1,6 @@
 package com.tmasolutions.service;
 
 import com.tmasolutions.model.Book;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,7 +12,7 @@ public interface IBookService {
     Book updateNameRequired(Long id, String name);
     Book updateDescriptionRequired(Long id, String description);
     Book updateLanguageRequired(Long id, String language);
-    Book updateAuthorNameRequired(Long id, String authorName);
+    Book updateAuthorNameRequired(Long id, String author);
 
     //
     Book updateNameReadOnly(Long id, String name);
@@ -38,9 +36,14 @@ public interface IBookService {
     Book updateAuthorNameNotSupports(Long id, String authorName);
 
     //REQUIRES_NEW
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
     Book updateNameRequiresNew(Long id, String name);
+
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
     Book updateDescriptionRequiresNew(Long id, String description);
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
     Book updateLanguageRequiresNew(Long id, String language);
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
     Book updateAuthorNameRequiresNew(Long id, String authorName);
 
     //NESTED
@@ -50,15 +53,15 @@ public interface IBookService {
     Book updateAuthorNameNested(Long id, String authorName);
 
     //MANDATORY
-    @Transactional(propagation = Propagation.MANDATORY)
+   // @Transactional(propagation = Propagation.MANDATORY)
     Book updateNameMandatory(Long id, String name);
 
-    @Transactional(propagation = Propagation.MANDATORY)
+  //  @Transactional(propagation = Propagation.MANDATORY)
     Book updateDescriptionMandatory(Long id, String description);
 
-    @Transactional(propagation = Propagation.MANDATORY)
+  //  @Transactional(propagation = Propagation.MANDATORY)
     Book updateLanguageMandatory(Long id, String language);
 
-    @Transactional(propagation = Propagation.MANDATORY)
+    //@Transactional(propagation = Propagation.MANDATORY)
     Book updateAuthorNameMandatory(Long id, String authorName);
 }
